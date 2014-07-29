@@ -14,5 +14,6 @@ class drupal::defaultsite {
     writeaccess    => $drupal::writeaccess,
     managedatabase => $drupal::managedatabase,
     managevhost    => $drupal::managevhost,
+    install_profile => $drupal::install_profile,
   }
 }

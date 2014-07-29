@@ -15,6 +15,7 @@ define drupal::site (
   $managevhost    = $drupal::params::managevhost,
   $base_url       = undef,
   $cookie_domain  = undef,
+  $install_profile = undef,
 ) {
   require drupal::configure
 
@@ -98,7 +99,7 @@ define drupal::site (
     } ->
 
     exec { "install ${name} drupal site":
-      command   => "drush site-install standard --account-pass='${admin_password}' -l ${name} --yes --site-name=${name}",
+      command   => "drush site-install ${install_profile} --account-pass='${admin_password}' -l ${name} --yes --site-name=${name}",
       path      => '/usr/local/bin:/bin:/usr/bin',
       unless    => "drush core-status -l ${name} | grep 'bootstrap.*Successful'",
       logoutput => true,

@@ -17,6 +17,7 @@ class drupal (
   $drushversion   = $drupal::params::drushversion,
   $managedatabase = $drupal::params::managedatabase,
   $managevhost    = $drupal::params::managevhost,
+  $install_profile = $drupal::params::install_profile,
 ) inherits drupal::params {
   include apache
   include apache::mod::php

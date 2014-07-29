@@ -37,6 +37,9 @@ class drupal::params {
   # default to installing the package from the repos
   $installtype     = 'package'
 
+  # default to installing the standard install profile
+  $install_profile     = 'standard'
+
   # default to requiring the user to manage the database and the vhost
   $managedatabase  = false
   $managevhost     = false
@@ -48,4 +51,5 @@ class drupal::params {
   $dbport          = ''
   $dbdriver        = 'mysql'
   $dbprefix        = ''
+
 }

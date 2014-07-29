@@ -9,6 +9,7 @@ class drupal::configure {
 
   file { "${drupal::docroot}/.htaccess":
     ensure  => file,
+    replace => "no",
     source  => 'puppet:///modules/drupal/htaccess',
   }
 
