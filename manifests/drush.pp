@@ -6,7 +6,7 @@ class drupal::drush (
   if $drupal::installtype == 'remote' {
     exec { 'install drush':
       command => "/bin/tar -xf /tmp/drush-${version}.tar.gz -C /usr/local/share && rm /tmp/drush-${version}.tar.gz",
-      onlyif  => "/usr/bin/curl http://ftp.drupal.org/files/projects/drush-${version}.tar.gz -o /tmp/drush-${version}.tar.gz",
+      onlyif  => "/usr/bin/wget http://ftp.drupal.org/files/projects/drush-${version}.tar.gz -O /tmp/drush-${version}.tar.gz",
       creates => '/usr/local/share/drush',
     }
   } else {
