@@ -2,28 +2,23 @@ class drupal::drush (
   $docroot = $drupal::docroot,
   $version = $drupal::drushversion
 ) {
-  # When drush7 gets packaged, drop this crap
-  if $drupal::installtype == 'remote' {
-    exec { 'install drush':
-      command => "/bin/tar -xf /tmp/drush-${version}.tar.gz -C /usr/local/share && rm /tmp/drush-${version}.tar.gz",
-      onlyif  => "/usr/bin/wget http://ftp.drupal.org/files/projects/drush-${version}.tar.gz -O /tmp/drush-${version}.tar.gz",
-      creates => '/usr/local/share/drush',
-    }
-  } else {
-    file { "/tmp/drush-${version}.tar.gz":
-      ensure => file,
-      source => "puppet:///modules/drupal/drush-${version}.tar.gz",
-      before => Exec['install drush'],
-    }
-    exec { 'install drush':
-      command => "/bin/tar -xf /tmp/drush-${version}.tar.gz -C /usr/local/share",
-      creates => '/usr/local/share/drush',
-    }
+  # install composer
+  exec { 'install composer':
+      command     => '/usr/bin/curl -sS https://getcomposer.org/installer | /usr/bin/php -- --install-dir=/usr/local/bin --filename=composer',
+      environment => ['HOME=/root'],
+      unless      => '/usr/bin/test -f /usr/local/bin/composer',
+  }
+
+  exec { 'install drush':
+      command     => "/usr/local/bin/composer global require drush/drush:${version}",
+      environment => ['HOME=/root'],
+      unless      => '/usr/bin/test -f /root/.composer/vendor/drush/drush/drush',
+      require     => Exec['install composer']
   }
 
   file { '/usr/local/bin/drush':
     ensure  => symlink,
-    target  => '/usr/local/share/drush/drush',
+    target  => '/root/.composer/vendor/drush/drush/drush',
     require => Exec['install drush'],
   }
 

@@ -26,7 +26,7 @@ class drupal::params {
   $drupalversion   = '7.x'
 
   # The version of drush to install. Currently, no native packages exist.
-  $drushversion    = '7.x-5.8'
+  $drushversion    = '9.*'
 
   # Session variables, are used in settings.php template in seconds. Cookie lifetime 0 = delete cookie after closing browser.
   $ses_gc_maxlife  = 200000
